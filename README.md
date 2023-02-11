@@ -1,3 +1,26 @@
+# End Point
+
+|     No     |     Route                 |     Keterangan                             |
+|------------|---------------------------|--------------------------------------------|
+|     1.     |     /                     |     Menampilkan   Halaman Home             |
+|     2.     |     /dashboard            |     Menampilkan   Halaman Dashboard        |
+|     3.     |     /books                |     Menampilkan   Halaman Books            |
+|     4.     |     /addBook              |     Menampilkan   Halaman AddBook          |
+|     5.     |     /bookDetail/:id       |     Menampilkan   Halaman BookDetail       |
+|     6.     |     /users                |     Menampilkan   Halaman User             |
+|     7.     |     /userEdit/:id         |     Menampilkan   Halaman UserEdit         |
+|     8.     |     /settings             |     Menampilkan   Halaman Setting          |
+|     9.     |     /carts                |     Menampilkan   Halaman Cart             |
+|     10.    |     /cartsEdit            |     Menampilkan   Halaman CartEdit         |
+|     11.    |     /auth/login           |     Menampilkan   Halaman Login            |
+|     12.    |     /auth/signin          |     Menampilkan   Halaman Signin           |
+|     13.    |     /publishers           |     Menampilkan   Halaman Publisher        |
+|     14.    |     /publisherAdd         |     Menampilkan   Halaman PublisherAdd     |
+|     15.    |     /publisherEdit/:id    |     Menampilkan   Halaman PublisherEdit    |
+|     16.    |     /genres               |     Menampilkan   Halaman Genre            |
+|     17.    |     /genreAdd             |     Menampilkan   Halaman GenreAdd         |
+|     18.    |     /genreEdit/:id        |     Menampilkan   Halaman GenreEdit        |
+
 # Bash for Sequelize
 
 >> User
