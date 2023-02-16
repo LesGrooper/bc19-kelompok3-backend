@@ -1,39 +1,38 @@
-const {Cart, Book, Genre, Publisher } = require("../models");
+const { Cart, Book, Genre, Publisher } = require("../models");
 const { Op } = require("sequelize");
 
 class BookController {
   static async getData(req, resp) {
     try {
       let data = await Book.findAll({
+        order: [["id", "ASC"]],
         include: [
           {
             model: Genre,
-                attributes: ["genre"],
+            attributes: ["genre"],
           },
           {
             model: Publisher,
             attributes: ["pub_name"],
           },
-          {
-            model: Cart,
-          },
         ],
       });
       resp.status(200).json(data);
+      // console.log(data)
     } catch (error) {
-      // resp.status(500).json(error);
-      console.log(error)
+      resp.status(500).json(error);
+      // console.log(error);
     }
   }
 
   static async getStatusData(req, resp) {
     try {
-      const id = req.id
-      let data = await Book.findAndCountAll(id)
-      resp.status(200).json(data)
+      const id = req.id;
+      let data = await Book.findAndCountAll(id);
+      resp.status(200).json(data);
     } catch (error) {
-      resp.status(500).json(error)
-      console.log(error)
+      resp.status(500).json(error);
+      console.log(error);
     }
   }
 
@@ -44,44 +43,64 @@ class BookController {
         where: {
           id,
         },
-         // include: [{ model: Publisher }],
+        include: [
+          {
+            model: Publisher,
+          },
+          {
+            model: Cart,
+          },
+        ],
       });
       resp.status(200).json(data);
     } catch (error) {
       resp.status(500).json(error);
-      // console.log(error)
+      // console.log(error);
+    }
+  }
+
+  static async getLatestData(req, resp) {
+    try {
+      let data = await Book.findAll({
+        limit: 3,
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Publisher,
+          },
+        ],
+      });
+      resp.status(200).json(data);
+    } catch (error) {
+      resp.status(500).json(error);
+      console.log(error);
     }
   }
 
   static async postData(req, resp) {
     try {
-      const { pub_id, title, price,  desc } = req.body;
+      const { pub_id, title, image, price, desc } = req.body;
+      if (!req.file) return resp.send('Please upload a file')
+      // const { filename} = req.file.filename;
       const data = await Book.create({
         pub_id,
         title,
         price,
-        image : req.protocol +
-        "://" +
-        req.get("host") +
-        "/img/uploads/" +
-        req.file.filename,
+        image: req.protocol + "://" + req.get("host") + "/img/uploads/" + req.file.filename,
         desc,
       });
-
-
-      
 
       data
         ? resp.status(200).json({
             message: "Data ID has Added!",
-            data
+            data,
           })
         : resp.status(403).json({
             message: "Data ID Coulnd't be Added!",
           });
     } catch (error) {
       resp.status(500).json(error);
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -94,7 +113,12 @@ class BookController {
           pub_id,
           title,
           price,
-          image,
+          image:
+            req.protocol +
+            "://" +
+            req.get("host") +
+            "/img/uploads/" +
+            req.file.filename,
           desc,
         },
         {
@@ -111,6 +135,7 @@ class BookController {
           });
     } catch (error) {
       resp.status(500).json(error);
+      // console.log(error);
     }
   }
 
